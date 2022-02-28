@@ -1,1 +1,2 @@
-##    npm   script
+##    npm   script 
+# add husky hooks

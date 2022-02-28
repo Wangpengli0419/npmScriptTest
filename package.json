@@ -1,0 +1,51 @@
+{
+  "name": "hello-npm-script",
+  "version": "0.1.1",
+  "description": "hello npm script",
+  "main": "index.js",
+  "config": {
+    "port": 7459
+  },
+  "scripts": {
+    "lint": "eslint *.js --fix",
+    "lint:js": "eslint *.js",
+    "lint:js:fix": "npm run lint:js -- --fix",
+    "lint:css": "stylelint *.less",
+    "lint:json": "jsonlint -q -i *.json",
+    "pretest": "# 运行所有代码检查和单元测试开始 \n",
+    "test": " npm-run-all --parallel lint:* ",
+    "posttest": "# 运行所有代码检查和单元测试结束 \n",
+    "precover": "rm -rf coverage",
+    "cover": "nyc --reporter=html npm test ",
+    "cover:cleanup": "rm -rf coverage && rm -rf .nyc_output",
+    "cover:archive": "mkdir -p coverage_archive/$npm_package_version && cp -r coverage/* coverage_archive/$npm_package_version",
+    "cover:serve": "http-server coverage_archive/$npm_package_version -p $npm_package_config_port",
+    "cover:open": "open-cli http://localhost:$npm_package_config_port",
+    "postcover": "npm-run-all cover:archive cover:cleanup --parallel cover:serve cover:open",
+    "path": "echo $PATH"
+  },
+  "author": "nasus",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "chai": "^4.1.2",
+    "eslint": "^8.9.0",
+    "husky": "^7.0.4",
+    "jsonlint": "^1.6.2",
+    "lint-staged": "^12.3.4",
+    "markdownlint-cli": "^0.5.0",
+    "mocha": "^4.0.1",
+    "npm-run-all": "^4.1.5",
+    "nyc": "^15.1.0",
+    "stylelint": "^8.2.0",
+    "stylelint-config-standard": "^17.0.0",
+    "precommit": "npm run lint",
+    "prepush": "npm run test"
+  },
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js",
+      ".*.js"
+    ]
+  }
+}

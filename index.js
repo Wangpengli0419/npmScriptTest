@@ -4,3 +4,4 @@
 //   console.log('some log');
 // }
 console.log(123);
+return NaN;
